@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>WE Guide - نسخة تجريبية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><noscript><link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet"></noscript>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Tajawal', 'Inter', system-ui, sans-serif;
+            background: radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.1), rgba(6, 11, 40, 0.96)), 
+                        linear-gradient(135deg, #0b0f2a 0%, #1a1e3a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .bg-glow { position: fixed; width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(139,92,246,0.3) 0%, rgba(139,92,246,0) 70%); top: -20%; right: -20%; border-radius: 50%; filter: blur(80px); z-index: -1; }
+        .bg-glow-2 { position: fixed; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(6,182,212,0.2) 0%, rgba(6,182,212,0) 70%); bottom: -20%; left: -20%; border-radius: 50%; filter: blur(80px); z-index: -1; }
+
+        .app-container {
+            max-width: 1300px; width: 100%; background: rgba(20, 25, 55, 0.65);
+            backdrop-filter: blur(16px); border-radius: 2rem;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
+            overflow: hidden; display: flex; flex-direction: column;
+            height: 85vh; height: 85dvh;
+        }
+        @media (max-width: 600px) {
+            .app-container { height: 100dvh; border-radius: 0; }
+            body { padding: 0; align-items: flex-start; }
+        }
+        .header {
+            background: rgba(10, 14, 35, 0.7); padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+        }
+        .brand { display: flex; align-items: center; gap: 0.8rem; }
+        .we-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #8b5cf6, #a855f7); border-radius: 24px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.5rem; color: white; }
+        .logo-text { font-size: 1.8rem; font-weight: 700; background: linear-gradient(120deg, #fff, #c084fc); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .logo-small { font-size: 0.7rem; color: #94a3b8; }
+        .status-badge { display: flex; align-items: center; gap: 0.5rem; background: rgba(139,92,246,0.2); padding: 0.4rem 1rem; border-radius: 40px; border: 1px solid rgba(139,92,246,0.4); white-space: nowrap; flex-shrink: 0; }
+        .status-dot { width: 10px; height: 10px; background: #22c55e; border-radius: 50%; animation: pulse 1.8s infinite; }
+        @keyframes pulse { 0% { opacity: 0.4; transform: scale(0.8);} 100% { opacity: 1; transform: scale(1.2);} }
+        
+        .chat-area { flex: 1; padding: 1.5rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; scroll-behavior: smooth; }
+        .chat-area::-webkit-scrollbar { width: 5px; }
+        .chat-area::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 10px; }
+        .chat-area::-webkit-scrollbar-thumb { background: #8b5cf6; border-radius: 10px; }
+        .message { max-width: 90%; padding: 0.75rem 1.25rem; border-radius: 1.5rem; font-size: 0.9rem; line-height: 1.45; white-space: pre-line; animation: fadeSlideUp 0.25s ease; }
+        .user-msg { background: linear-gradient(115deg, #4f46e5, #7c3aed); color: white; align-self: flex-end; border-bottom-right-radius: 0.5rem; }
+        .bot-msg { background: rgba(30, 35, 65, 0.8); backdrop-filter: blur(4px); color: #e2e8f0; align-self: flex-start; border-bottom-left-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.08); }
+        .bot-msg a { color: #c084fc; text-decoration: none; }
+        .bot-msg a:hover { text-decoration: underline; }
+        .options-container { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+        .option-btn { background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.4); color: #c084fc; padding: 0.6rem 1.2rem; border-radius: 1.5rem; cursor: pointer; font-family: 'Tajawal', inherit; font-size: 0.85rem; transition: all 0.2s ease; text-align: right; }
+        .option-btn:hover { background: linear-gradient(95deg, #8b5cf6, #c084fc); color: white; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(139,92,246,0.3); }
+        
+        .input-area { background: rgba(10, 14, 35, 0.8); padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); display: flex; gap: 0.8rem; }
+        .input-area input { flex: 1; background: rgba(15, 20, 45, 0.9); border: 1px solid rgba(139,92,246,0.3); padding: 0.8rem 1.2rem; border-radius: 2rem; font-size: 0.9rem; color: #f1f5f9; font-family: 'Tajawal', inherit; }
+        .input-area input:focus { outline: none; border-color: #a855f7; box-shadow: 0 0 0 3px rgba(168,85,247,0.2); }
+        .input-area button { background: linear-gradient(95deg, #8b5cf6, #c084fc); border: none; padding: 0.7rem 1.8rem; border-radius: 2rem; color: white; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .input-area button:hover { transform: scale(1.02); box-shadow: 0 8px 20px rgba(139,92,246,0.4); }
+        
+        .welcome-popup { position: fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+        .popup-card { background: rgba(20, 25, 55, 0.95); backdrop-filter: blur(20px); border-radius: 2rem; padding: 2rem; max-width: 550px; text-align: center; border: 1px solid rgba(139,92,246,0.5); animation: popZoom 0.3s ease; }
+        @keyframes popZoom { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .popup-icon { width: 90px; height: 90px; background: linear-gradient(135deg, #8b5cf6, #a855f7); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem; font-weight: 800; color: white; }
+        .popup-title { font-size: 1.8rem; font-weight: 700; background: linear-gradient(120deg, #fff, #c084fc); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .popup-desc { color: #cbd5e1; font-size: 0.9rem; margin: 1rem 0; line-height: 1.5; }
+        .popup-btn { background: #8b5cf6; border: none; padding: 0.7rem 2rem; border-radius: 2rem; color: white; font-weight: bold; cursor: pointer; margin-top: 1rem; }
+        .footer-note { font-size: 0.65rem; text-align: center; background: rgba(0,0,0,0.3); padding: 0.5rem; color: #7e8aa2; }
+        .hidden { display: none; }
+        .general-info { background: rgba(0,0,0,0.4); padding: 1rem; border-radius: 16px; margin-top: 0.5rem; }
+        .general-info h3 { color: #c084fc; margin-bottom: 0.5rem; }
+        .general-info h4 { color: #e9d5ff; margin-top: 1rem; margin-bottom: 0.3rem; }
+        .general-info ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+        .general-info li { margin: 0.2rem 0; }
+        .general-info p { margin-top: 0.5rem; font-size: 0.85rem; color: #a0aec0; }
+        
+        .popup-table-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 10000;
+            overflow-y: auto;
+            overflow-x: auto;
+            direction: rtl;
+            padding: 20px;
+            font-family: 'Tajawal', sans-serif;
+        }
+        .popup-table-inner {
+            background: #0b0f2a;
+            border-radius: 20px;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 20px auto;
+            border: 1px solid #8b5cf6;
+        }
+        .popup-table-inner h3 { color: #c084fc; margin-top: 20px; margin-bottom: 10px; }
+        .popup-table-inner table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .popup-table-inner th, .popup-table-inner td {
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px;
+            text-align: center;
+            color: #e2e8f0;
+        }
+        .popup-table-inner th {
+            background: #4f46e5;
+            color: white;
+        }
+        .close-popup-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        .scrollable-table {
+            overflow-x: auto;
+        }
+
+        /* أيقونة المساعد المتحركة */
+        .cartoon-helper {
+            position: fixed;
+            width: 85px;
+            height: 85px;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9999;
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+        }
+        .cartoon-helper:hover {
+            transform: scale(1.05);
+        }
+        .cartoon-helper svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .helper-tooltip {
+            position: absolute;
+            bottom: 90px;
+            right: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            width: 220px;
+            text-align: center;
+            border: 1px solid #c084fc;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 10001;
+        }
+        .cartoon-helper:hover .helper-tooltip {
+            opacity: 1;
+        }
+        .helper-popup {
+            position: absolute;
+            bottom: 110px;
+            right: 0;
+            background: #1e1e3a;
+            border-radius: 20px;
+            padding: 15px;
+            width: 260px;
+            color: white;
+            border: 1px solid #c084fc;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            z-index: 10002;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .helper-popup p {
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+        .helper-popup button {
+            background: #8b5cf6;
+            border: none;
+            padding: 5px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .tour-bubble {
+            position: absolute;
+            background: #ffd966cc;
+            backdrop-filter: blur(12px);
+            color: #1e293b;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            max-width: min(240px, 78vw);
+            text-align: center;
+            z-index: 10003;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            white-space: normal;
+            font-family: 'Tajawal', sans-serif;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border: 1px solid #facc15;
+        }
+        .quick-bar-toggle {
+            padding: 0.4rem 1.5rem;
+            background: rgba(10, 14, 35, 0.5);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+        }
+        .q-toggle-btn {
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.35);
+            color: #c084fc;
+            padding: 0.3rem 1rem;
+            border-radius: 1.5rem;
+            cursor: pointer;
+            font-family: 'Tajawal', inherit;
+            font-size: 0.82rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .q-toggle-btn:hover { background: rgba(139,92,246,0.25); color: white; }
+        .quick-bar {
+            display: flex; flex-wrap: wrap; gap: 0.5rem;
+            padding: 0.6rem 1.5rem;
+            background: rgba(10, 14, 35, 0.5);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            animation: fadeSlideUp 0.2s ease;
+        }
+        .q-chip {
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.35);
+            color: #c084fc; padding: 0.35rem 0.85rem;
+            border-radius: 1.5rem; cursor: pointer;
+            font-family: 'Tajawal', inherit; font-size: 0.8rem;
+            transition: all 0.2s ease; white-space: nowrap;
+        }
+        .q-chip:hover { background: linear-gradient(95deg, #8b5cf6, #c084fc); color: white; transform: translateY(-1px); }
+
+        .typing-indicator { display: flex; gap: 5px; align-items: center; padding: 0.75rem 1.25rem; }
+        .typing-indicator span {
+            width: 8px; height: 8px; background: #8b5cf6;
+            border-radius: 50%; animation: typingBounce 1.2s infinite;
+        }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typingBounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-8px); } }
+
+        .smart-suggestions { margin-top: 0.7rem; }
+        .smart-suggestions .suggest-title { color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.4rem; }
+
+        @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 600px) {
+            .tour-bubble { font-size: 0.7rem; white-space: normal; max-width: 150px; }
+            .cartoon-helper { width: 65px; height: 65px; }
+            .quick-bar { padding: 0.5rem 0.8rem; }
+        }
+
+        .autocomplete-box {
+            position: absolute;
+            background: rgba(15,20,50,0.97);
+            border: 1px solid rgba(139,92,246,0.5);
+            border-radius: 1rem;
+            width: calc(100% - 3rem);
+            max-height: 220px;
+            overflow-y: auto;
+            z-index: 5000;
+            bottom: 100%;
+            left: 1.5rem;
+            margin-bottom: 6px;
+            box-shadow: 0 -8px 24px rgba(0,0,0,0.4);
+        }
+        .autocomplete-box::-webkit-scrollbar { width: 4px; }
+        .autocomplete-box::-webkit-scrollbar-thumb { background: #8b5cf6; border-radius: 4px; }
+        .ac-item {
+            padding: 0.6rem 1.1rem;
+            color: #c084fc;
+            cursor: pointer;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: background 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .ac-item:hover, .ac-item.ac-active { background: rgba(139,92,246,0.2); color: white; }
+        .ac-item:last-child { border-bottom: none; }
+        .ac-icon { font-size: 0.9rem; }
+        .ac-highlight { color: #f0abfc; font-weight: 700; }
+
+        .recommend-bar {
+            background: linear-gradient(135deg, rgba(139,92,246,0.18), rgba(6,182,212,0.12));
+            border: 1px solid rgba(139,92,246,0.35);
+            border-radius: 1rem;
+            padding: 0.7rem 1.1rem;
+            margin: 0 1.5rem 0.5rem;
+            font-size: 0.82rem;
+            color: #e2e8f0;
+        }
+        .recommend-bar strong { color: #c084fc; }
+
+        .feedback-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.6rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+        .fb-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 20px;
+            color: #94a3b8;
+            padding: 0.2rem 0.7rem;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+            font-family: 'Tajawal', inherit;
+        }
+        .fb-btn:hover { background: rgba(139,92,246,0.2); color: white; border-color: #8b5cf6; }
+        .fb-btn.voted { background: rgba(139,92,246,0.35); color: white; cursor: default; }
+
+        .theme-btn {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 20px;
+            color: #94a3b8;
+            padding: 0.3rem 0.7rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .theme-btn:hover { background: rgba(139,92,246,0.2); color: white; }
+
+        .export-btn {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 20px;
+            color: #94a3b8;
+            padding: 0.3rem 0.7rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .export-btn:hover { background: rgba(6,182,212,0.2); color: #67e8f9; border-color: #06b6d4; }
+
+        .header-tools { display: flex; align-items: center; gap: 0.5rem; }
+
+        body.light-mode {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8e8f5 100%);
+        }
+        body.light-mode .app-container {
+            background: rgba(255,255,255,0.92);
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.08);
+        }
+        body.light-mode .header { background: rgba(240,235,255,0.95); border-bottom-color: rgba(139,92,246,0.2); }
+        body.light-mode .chat-area { background: transparent; }
+        body.light-mode .bot-msg { background: rgba(240,235,255,0.9); color: #1e1b4b; border-color: rgba(139,92,246,0.2); }
+        body.light-mode .user-msg { background: linear-gradient(115deg, #6d28d9, #9333ea); }
+        body.light-mode .input-area { background: rgba(235,230,255,0.95); border-top-color: rgba(139,92,246,0.2); }
+        body.light-mode .input-area input { background: white; color: #1e1b4b; border-color: rgba(139,92,246,0.3); }
+        body.light-mode .quick-bar { background: rgba(235,230,255,0.6); }
+        body.light-mode .quick-bar-toggle { background: rgba(235,230,255,0.6); }
+        body.light-mode .q-toggle-btn { color: #7c3aed; }
+        body.light-mode .autocomplete-box { background: rgba(245,242,255,0.99); border-color: rgba(139,92,246,0.4); }
+        body.light-mode .ac-item { color: #7c3aed; }
+        body.light-mode .footer-note { background: rgba(235,230,255,0.7); color: #6b7280; }
+        body.light-mode .feedback-row { color: #9ca3af; }
+
+        .stats-popup {
+            position:fixed; top:0; left:0; right:0; bottom:0;
+            background:rgba(0,0,0,0.7); backdrop-filter:blur(8px);
+            display:flex; align-items:center; justify-content:center; z-index:20000;
+        }
+        .stats-card {
+            background: rgba(20,25,55,0.97);
+            border:1px solid rgba(139,92,246,0.5);
+            border-radius:1.5rem;
+            padding:2rem; max-width:400px; width:90%;
+            animation: popZoom 0.25s ease;
+        }
+        .stats-card h3 { color:#c084fc; margin-bottom:1rem; font-size:1.2rem; }
+        .stat-row { display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid rgba(255,255,255,0.07); color:#e2e8f0; font-size:0.9rem; }
+        .stat-val { color:#a78bfa; font-weight:700; }
+        .stats-close { background:#8b5cf6; border:none; padding:0.5rem 1.5rem; border-radius:20px; color:white; font-weight:bold; cursor:pointer; margin-top:1rem; font-family:'Tajawal',inherit; }
+    
+        /* ── SR Browser ── */
+        .sr-browser-btn { background:linear-gradient(95deg,#0ea5e9,#38bdf8); border:none; padding:0.5rem 1rem; border-radius:2rem; color:white; font-weight:600; cursor:pointer; font-size:0.82rem; transition:0.2s; }
+        .sr-browser-btn:hover { transform:scale(1.04); box-shadow:0 6px 18px rgba(14,165,233,0.4); }
+        .sr-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px); z-index:9000; display:none; align-items:flex-start; justify-content:center; padding:1rem; overflow-y:auto; }
+        .sr-overlay.open { display:flex; }
+        .sr-panel { background:rgba(12,18,45,0.98); border-radius:1.5rem; border:1px solid rgba(14,165,233,0.35); width:100%; max-width:1350px; min-height:90vh; display:flex; flex-direction:column; overflow:hidden; margin:auto; }
+        .sr-panel-header { background:rgba(14,165,233,0.12); padding:1rem 1.5rem; display:flex; align-items:center; gap:1rem; border-bottom:1px solid rgba(14,165,233,0.2); flex-wrap:wrap; }
+        .sr-panel-title { font-size:1.2rem; font-weight:700; color:#38bdf8; flex:1; }
+        .sr-count-badge { background:rgba(14,165,233,0.2); border:1px solid rgba(14,165,233,0.4); color:#7dd3fc; padding:0.25rem 0.9rem; border-radius:2rem; font-size:0.8rem; }
+        .sr-close-btn { background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.35); color:#fca5a5; padding:0.4rem 1rem; border-radius:2rem; cursor:pointer; font-size:0.85rem; transition:0.2s; }
+        .sr-close-btn:hover { background:rgba(239,68,68,0.3); }
+        .sr-filters-bar { display:flex; gap:0.7rem; padding:0.9rem 1.5rem; flex-wrap:wrap; background:rgba(0,0,0,0.25); border-bottom:1px solid rgba(255,255,255,0.06); }
+        .sr-search-input { flex:1; min-width:200px; background:rgba(15,25,55,0.9); border:1px solid rgba(14,165,233,0.3); border-radius:2rem; padding:0.6rem 1.2rem; color:#e2e8f0; font-family:'Tajawal',inherit; font-size:0.88rem; }
+        .sr-search-input:focus { outline:none; border-color:#38bdf8; box-shadow:0 0 0 3px rgba(14,165,233,0.15); }
+        .sr-select { background:rgba(15,25,55,0.9); border:1px solid rgba(14,165,233,0.25); border-radius:1.2rem; padding:0.55rem 1rem; color:#e2e8f0; font-family:'Tajawal',inherit; font-size:0.82rem; cursor:pointer; max-width:200px; }
+        .sr-select:focus { outline:none; border-color:#38bdf8; }
+        .sr-clear-btn { background:rgba(139,92,246,0.15); border:1px solid rgba(139,92,246,0.35); color:#c084fc; padding:0.5rem 1rem; border-radius:2rem; cursor:pointer; font-size:0.82rem; white-space:nowrap; transition:0.2s; }
+        .sr-clear-btn:hover { background:rgba(139,92,246,0.3); }
+        .sr-result-info { padding:0.5rem 1.5rem; font-size:0.78rem; color:#64748b; border-bottom:1px solid rgba(255,255,255,0.05); }
+        .sr-table-wrap { flex:1; overflow:auto; }
+        .sr-table { width:100%; border-collapse:collapse; font-size:0.83rem; }
+        .sr-table thead th { background:rgba(14,165,233,0.18); color:#7dd3fc; padding:0.75rem 1rem; text-align:right; font-weight:600; position:sticky; top:0; z-index:10; border-bottom:1px solid rgba(14,165,233,0.25); white-space:nowrap; cursor:pointer; user-select:none; }
+        .sr-table thead th:hover { background:rgba(14,165,233,0.28); }
+        .sr-table thead th .sort-arrow { opacity:0.4; margin-right:0.3rem; font-size:0.7rem; }
+        .sr-table thead th.sorted .sort-arrow { opacity:1; color:#38bdf8; }
+        .sr-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.04); cursor:pointer; transition:background 0.15s; }
+        .sr-table tbody tr:hover { background:rgba(14,165,233,0.1); }
+        .sr-table tbody tr:hover td:first-child { color:#38bdf8; }
+        .sr-table td { padding:0.7rem 1rem; color:#cbd5e1; vertical-align:top; line-height:1.45; }
+        .sr-table td.main-sr-cell { color:#e2e8f0; font-weight:600; white-space:nowrap; }
+        .sr-cat-tag { display:inline-block; background:rgba(139,92,246,0.15); border:1px solid rgba(139,92,246,0.3); color:#c084fc; border-radius:0.8rem; padding:0.1rem 0.6rem; font-size:0.75rem; white-space:nowrap; }
+        .sr-sub-tag { display:inline-block; background:rgba(34,197,94,0.12); border:1px solid rgba(34,197,94,0.25); color:#86efac; border-radius:0.8rem; padding:0.1rem 0.6rem; font-size:0.75rem; white-space:nowrap; }
+        .sr-table mark { background:rgba(251,191,36,0.25); color:#fde68a; border-radius:0.2rem; padding:0 0.1rem; }
+        .sr-pagination { display:flex; align-items:center; justify-content:center; gap:0.8rem; padding:0.9rem; background:rgba(0,0,0,0.25); border-top:1px solid rgba(255,255,255,0.06); }
+        .sr-pg-btn { background:rgba(14,165,233,0.15); border:1px solid rgba(14,165,233,0.3); color:#7dd3fc; padding:0.4rem 1rem; border-radius:1.5rem; cursor:pointer; font-size:0.82rem; transition:0.2s; }
+        .sr-pg-btn:hover:not(:disabled) { background:rgba(14,165,233,0.3); }
+        .sr-pg-btn:disabled { opacity:0.35; cursor:default; }
+        .sr-pg-info { color:#64748b; font-size:0.82rem; }
+        .sr-pg-select { background:rgba(15,25,55,0.9); border:1px solid rgba(14,165,233,0.25); border-radius:1rem; padding:0.3rem 0.6rem; color:#e2e8f0; font-size:0.82rem; }
+        .sr-no-results { text-align:center; padding:3rem; color:#64748b; font-size:1rem; }
+        .sr-send-hint { padding:0.5rem 1.5rem; font-size:0.75rem; color:#475569; text-align:center; background:rgba(0,0,0,0.15); }
+        @media(max-width:700px){ .sr-table thead th:nth-child(4),.sr-table td:nth-child(4){ display:none; } }
+
+        .stats-popup {
+            position:fixed; top:0; left:0; right:0; bottom:0;
+            background:rgba(0,0,0,0.7); backdrop-filter:blur(8px);
+            display:flex; align-items:center; justify-content:center; z-index:20000;
+        }
+        .stats-card {
+            background: rgba(20,25,55,0.97);
+            border:1px solid rgba(139,92,246,0.5);
+            border-radius:1.5rem;
+            padding:2rem; max-width:400px; width:90%;
+            animation: popZoom 0.25s ease;
+        }
+        .stats-card h3 { color:#c084fc; margin-bottom:1rem; font-size:1.2rem; }
+        .stat-row { display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid rgba(255,255,255,0.07); color:#e2e8f0; font-size:0.9rem; }
+        .stat-val { color:#a78bfa; font-weight:700; }
+        .stats-close { background:#8b5cf6; border:none; padding:0.5rem 1.5rem; border-radius:20px; color:white; font-weight:bold; cursor:pointer; margin-top:1rem; font-family:'Tajawal',inherit; }
+
+        /* ══ ميزة: حجم الخط القابل للتعديل ══ */
+        body { --font-scale: 1; }
+        .message, .input-area input, .option-btn, .q-chip { font-size: calc(0.9rem * var(--font-scale)); }
+
+        /* ══ ميزة: شريط التقدم للبحث ══ */
+        .search-progress {
+            position: fixed; top: 0; left: 0; height: 3px;
+            background: linear-gradient(90deg, #8b5cf6, #c084fc, #06b6d4);
+            z-index: 99999; width: 0; transition: width 0.3s ease;
+            border-radius: 0 2px 2px 0;
+        }
+
+        /* ══ ميزة: نسخ الرسالة ══ */
+        .copy-btn {
+            background: none; border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px; color: #64748b; padding: 0.2rem 0.6rem;
+            cursor: pointer; font-size: 0.72rem; margin-top: 0.5rem;
+            transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.3rem;
+        }
+        .copy-btn:hover { background: rgba(139,92,246,0.2); color: #c084fc; border-color: #8b5cf6; }
+        .copy-btn.copied { color: #22c55e; border-color: #22c55e; }
+
+        /* ══ ميزة: وضع التركيز Focus Mode ══ */
+        body.focus-mode .header-tools .export-btn,
+        body.focus-mode .header-tools .theme-btn,
+        body.focus-mode .quick-bar-toggle { display: none; }
+        body.focus-mode .app-container { max-width: 800px; }
+        .focus-btn {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 20px; color: #94a3b8;
+            padding: 0.3rem 0.7rem; cursor: pointer;
+            font-size: 0.8rem; transition: all 0.2s;
+        }
+        .focus-btn:hover { background: rgba(6,182,212,0.2); color: #67e8f9; border-color: #06b6d4; }
+        .focus-btn.active { background: rgba(6,182,212,0.25); color: #67e8f9; border-color: #06b6d4; }
+
+        /* ══ ميزة: بحث في المحادثة ══ */
+        .chat-search-bar {
+            position: absolute; top: 0; left: 0; right: 0;
+            background: rgba(10,14,35,0.97); backdrop-filter: blur(12px);
+            padding: 0.6rem 1rem; display: flex; gap: 0.5rem; align-items: center;
+            border-bottom: 1px solid rgba(139,92,246,0.3); z-index: 500;
+            animation: fadeSlideUp 0.2s ease;
+        }
+        .chat-search-bar input {
+            flex: 1; background: rgba(20,25,55,0.8);
+            border: 1px solid rgba(139,92,246,0.3); border-radius: 1.5rem;
+            padding: 0.5rem 1rem; color: #f1f5f9; font-family: 'Tajawal', inherit; font-size: 0.85rem;
+        }
+        .chat-search-bar input:focus { outline: none; border-color: #a855f7; }
+        .chat-search-bar button {
+            background: rgba(139,92,246,0.2); border: 1px solid rgba(139,92,246,0.35);
+            border-radius: 1rem; color: #c084fc; padding: 0.4rem 0.9rem;
+            cursor: pointer; font-size: 0.8rem; transition: 0.2s;
+        }
+        .chat-search-bar button:hover { background: rgba(139,92,246,0.4); }
+        .msg-highlight { background: rgba(251,191,36,0.35); border-radius: 3px; }
+
+        /* ══ ميزة: مؤشر الكتابة المطوّر ══ */
+        .char-counter {
+            position: absolute; bottom: 1.5rem; left: 1.5rem;
+            font-size: 0.65rem; color: #475569; pointer-events: none;
+            transition: color 0.2s;
+        }
+        .char-counter.warn { color: #f59e0b; }
+        .char-counter.limit { color: #ef4444; }
+
+        /* ══ ميزة: تاريخ المحادثة ══ */
+        .history-panel {
+            position: fixed; left: 0; top: 0; bottom: 0; width: 280px;
+            background: rgba(8,12,30,0.97); backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(139,92,246,0.25); z-index: 8000;
+            transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+            display: flex; flex-direction: column; padding: 1rem;
+        }
+        html[dir="rtl"] .history-panel {
+            left: auto; right: 0; border-right: none;
+            border-left: 1px solid rgba(139,92,246,0.25);
+            transform: translateX(100%);
+        }
+        .history-panel.open { transform: translateX(0); }
+        .history-panel h3 { color: #c084fc; font-size: 1rem; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.7rem; }
+        .history-item {
+            background: rgba(20,25,55,0.6); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 0.8rem; padding: 0.6rem 0.9rem; margin-bottom: 0.5rem;
+            cursor: pointer; transition: all 0.2s; font-size: 0.82rem; color: #cbd5e1;
+        }
+        .history-item:hover { background: rgba(139,92,246,0.2); border-color: rgba(139,92,246,0.4); color: white; }
+        .history-item .h-time { font-size: 0.68rem; color: #475569; margin-top: 0.2rem; }
+        .history-item .h-del { float: left; color: #ef4444; font-size: 0.75rem; opacity: 0; transition: 0.2s; }
+        html[dir="rtl"] .history-item .h-del { float: right; }
+        .history-item:hover .h-del { opacity: 1; }
+        .history-clear-btn {
+            margin-top: auto; background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3);
+            border-radius: 1rem; color: #f87171; padding: 0.5rem; cursor: pointer;
+            font-size: 0.8rem; transition: 0.2s; font-family: 'Tajawal', inherit;
+        }
+        .history-clear-btn:hover { background: rgba(239,68,68,0.3); }
+        .history-btn {
+            background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 20px; color: #94a3b8; padding: 0.3rem 0.7rem;
+            cursor: pointer; font-size: 0.8rem; transition: all 0.2s;
+        }
+        .history-btn:hover { background: rgba(139,92,246,0.2); color: #c084fc; border-color: #8b5cf6; }
+        .history-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+            z-index: 7999; display: none;
+        }
+        .history-overlay.open { display: block; }
+
+        /* ══ ميزة: أزرار حجم الخط ══ */
+        .font-ctrl {
+            display: flex; align-items: center; gap: 0.3rem;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px; padding: 0.15rem 0.5rem;
+        }
+        .font-ctrl button {
+            background: none; border: none; color: #94a3b8;
+            cursor: pointer; font-size: 1rem; line-height: 1; padding: 0 0.2rem;
+            transition: color 0.2s;
+        }
+        .font-ctrl button:hover { color: #c084fc; }
+        .font-ctrl span { font-size: 0.7rem; color: #64748b; min-width: 24px; text-align: center; }
+
+        /* ══ ميزة: شارة الإشعار ══ */
+        .notif-badge {
+            position: absolute; top: -4px; right: -4px; width: 8px; height: 8px;
+            background: #ef4444; border-radius: 50%; display: none;
+        }
+        .notif-badge.show { display: block; }
+
+        /* ══ ميزة: تحسين الرسالة — وقت الإرسال ══ */
+        .msg-time {
+            font-size: 0.62rem; color: #475569; margin-top: 0.3rem;
+            display: block; text-align: left;
+        }
+        html[dir="rtl"] .msg-time { text-align: right; }
+
+        /* ══ ميزة: إشعار toast ══ */
+        .toast {
+            position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(20px);
+            background: rgba(20,25,55,0.97); border: 1px solid rgba(139,92,246,0.5);
+            border-radius: 2rem; padding: 0.6rem 1.5rem; color: #e2e8f0;
+            font-size: 0.85rem; z-index: 99999; opacity: 0;
+            transition: all 0.3s ease; pointer-events: none; white-space: nowrap;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ══ تحسين: Header على الموبايل ══ */
+        @media(max-width:600px) {
+            .header-tools { gap: 0.3rem; flex-wrap: nowrap; overflow-x: auto; }
+            .header-tools::-webkit-scrollbar { display: none; }
+            .font-ctrl { display: none; }
+            .focus-btn { display: none; }
+            .status-badge { display: none; }
+        }
+
+        /* ══ v2.3: واجهة وخلفية مطوّرة + بوت متحرك ══ */
+        body { background: radial-gradient(circle at 85% 12%, rgba(6,182,212,0.10), transparent 42%), radial-gradient(circle at 10% 20%, rgba(139,92,246,0.16), rgba(6,11,40,0.97)), linear-gradient(135deg, #0b0f2a 0%, #141a3d 100%); }
+        .bg-glow { animation: drift1 22s ease-in-out infinite; }
+        .bg-glow-2 { animation: drift2 26s ease-in-out infinite; }
+        @keyframes drift1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(5vw,4vh); } }
+        @keyframes drift2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-4vw,-3vh); } }
+        .cartoon-helper svg { animation: botFloat 3.4s ease-in-out infinite; }
+        @keyframes botFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+        .cartoon-helper::before { content:''; position:absolute; inset:-8px; border-radius:50%; background: radial-gradient(circle, rgba(139,92,246,0.4), transparent 70%); z-index:-1; animation: pulse 2.6s infinite; }
+        #sendBtn { background: linear-gradient(115deg, #7c3aed, #2563eb) !important; border: none !important; box-shadow: 0 4px 14px rgba(124,58,237,0.35); }
+        .we-icon { box-shadow: 0 0 18px rgba(139,92,246,0.5); }
+</style>
+</head>
+<body>
+<div class="toast" id="toastMsg"></div>
+<div class="bg-glow"></div><div class="bg-glow-2"></div>
+<div class="app-container">
+    <div class="header">
+        <div class="brand"><div class="we-icon">we</div><div><span class="logo-text">WE Guide</span><div class="logo-small">نسخة تجريبية · بيانات عامة ومثالية</div></div></div>
+        <div class="header-tools">
+            <button class="theme-btn" id="themeBtn" title="تبديل الوضع">🌙 ليلي</button>
+            <div class="font-ctrl" title="حجم الخط">
+              <button onclick="changeFontSize(-1)">A-</button>
+              <span id="fontSizeLabel">100%</span>
+              <button onclick="changeFontSize(1)">A+</button>
+            </div>
+            <div class="status-badge"><div class="status-dot"></div><span class="status-text">عرض تجريبي · مسارات مثالية</span></div>
+        </div>
+    </div>
+    <div style="position:relative;flex:1;display:flex;flex-direction:column;overflow:hidden;">
+    <div class="chat-area" id="chatMessages">
+        <div class="message bot-msg">📡 <strong>WE Guide (نسخة تجريبية)</strong><br><br>دي نسخة عرض فيها أسعار باقات الإنترنت الأرضي المنشورة للعامة ومسارات مساعدة <strong>مثالية</strong> مش حقيقية، عشان تجرب شكل التطبيق.<br>جرّب: <strong>"النت بطيء"</strong> أو <strong>"سعر باقة 250 جيجا"</strong>.</div>
+    </div>
+    </div>
+    <div class="quick-bar-toggle" id="quickBarToggle">
+        <button class="q-toggle-btn" id="quickBarBtn" onclick="toggleQuickBar()">⚡ أسئلة سريعة <span id="qArrow">▲</span></button>
+    </div>
+    <div class="quick-bar" id="quickBar" style="display:none;"></div>
+    <div class="input-area" style="position:relative;">
+        <input type="text" id="userInput" placeholder="مثال: النت بطيء أو سعر باقة 250 جيجا" autocomplete="off">
+        <button id="sendBtn">إرسال ➤</button>
+    </div>
+    <div class="footer-note">نسخة تجريبية · أسعار الباقات منشورة على te.eg · المسارات مثالية ولا تمثل أي نظام داخلي</div>
+    <div class="footer-note" style="font-size:0.75rem; padding:0.3rem 1rem; opacity:0.7;">by: Mohamed Elsayed Fathi</div>
+</div>
+<div id="welcomePopup" class="welcome-popup">
+    <div class="popup-card"><div class="popup-icon">we</div><div class="popup-title">WE Guide · نسخة تجريبية</div>
+    <div class="popup-desc">🤖 اسأل بالعامية أو بالإنجليزي عن مشكلة إنترنت شائعة أو عن سعر باقة.<br><br>📋 المسارات هنا <strong>أمثلة توضيحية</strong> مش بيانات تشغيل حقيقية.</div>
+    <button class="popup-btn" id="closePopup">ابدأ الآن</button></div>
+</div>
+<script>
+
+const SUPER={100:171,150:296.4,200:376.2,250:450.3,300:524.4,400:661.2,500:752.4,750:1054.5,1500:1881};
+const MEGA={250:672.6,500:1026,750:1339.5,1500:2280};
+const N=s=>(s||'').toLowerCase().replace(/[\u064B-\u0652\u0640]/g,'').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').replace(/[^a-z0-9\u0621-\u064A ]/g,' ').replace(/\s+/g,' ').trim();
+const D='🧪 <i>مثال توضيحي للعرض التجريبي، مش إجراء حقيقي.</i>';
+const TOPICS=[
+ {k:['بطيء','بطيئ','بطء','slow','سرعه'],t:'النت بطيء',p:'Demo Tree › Internet › Slow speed',d:'مكتب المساعدة التجريبي',s:['اسأل العميل: البطء على كل الأجهزة ولا جهاز واحد؟','اطلب إعادة تشغيل الراوتر 30 ثانية.','اطلب تجربة كابل مباشر لو متاح.','لو المشكلة مستمرة: افتح طلب "Slow speed" في المسار المثالي.']},
+ {k:['مفيش نت','النت واقع','النت قاطع','no internet','انقطاع','مقطوع','مفيش انترنت'],t:'لا يوجد إنترنت',p:'Demo Tree › Internet › No connection',d:'مكتب المساعدة التجريبي',s:['اتأكد إن الفاتورة مدفوعة والخط شغال.','اسأل عن حالة لمبات الراوتر.','اطلب إعادة تشغيل الراوتر.','لو مفيش تغيير: افتح طلب "No connection" في المسار المثالي.']},
+ {k:['واي فاي','wifi','wi fi','باسورد','password','شبكه'],t:'مشكلة واي فاي',p:'Demo Tree › Wi-Fi › Name or password',d:'مكتب المساعدة التجريبي',s:['اسأل: المشكلة في ضعف الإشارة ولا نسيان الباسورد؟','للإشارة: انقل الراوتر لمكان مفتوح.','للباسورد: وجّه العميل لصفحة إعدادات الراوتر.']},
+ {k:['فاتوره','فاتورة','bill','invoice','حساب غلط','اتحاسب'],t:'استفسار فاتورة',p:'Demo Tree › Billing › Bill question',d:'قسم الفواتير التجريبي',s:['راجع مع العميل بنود الفاتورة.','لو في رقم غير مفهوم: افتح طلب "Bill question".']},
+ {k:['فلوس','استرداد','refund','ترجع'],t:'استرداد مبلغ',p:'Demo Tree › Billing › Refund request',d:'قسم الفواتير التجريبي',s:['اتأكد من سبب الاسترداد.','افتح طلب "Refund request" في المسار المثالي.']},
+ {k:['الغاء','يلغي','cancel','الغي'],t:'إلغاء الخدمة',p:'Demo Tree › Account › Cancel service',d:'قسم الحسابات التجريبي',s:['اسأل عن سبب الإلغاء واعرض بدائل.','لو العميل مصمم: افتح طلب "Cancel service".']},
+ {k:['نقل','انتقال','عنوان جديد','move','relocat'],t:'نقل الخط لعنوان جديد',p:'Demo Tree › Account › Move address',d:'قسم الحسابات التجريبي',s:['اطلب العنوان الجديد.','افتح طلب "Move address" في المسار المثالي.']},
+ {k:['تصعيد','مشرف','supervisor','escalat','شكوي','شكوى','complaint'],t:'تصعيد أو شكوى',p:'Demo Tree › Support › Escalation',d:'مكتب المساعدة التجريبي',s:['سجل ملخص المشكلة.','افتح طلب "Escalation" وحدد سبب التصعيد.']},
+ {k:['فني','زياره','technician','visit'],t:'زيارة فني',p:'Demo Tree › Visits › Technician visit',d:'مكتب الزيارات التجريبي',s:['اتأكد من موعد الزيارة المسجل.','لو الفني متأخر: افتح طلب "Reschedule visit".']},
+ {k:['رقم خدمه','خدمه العملاء','customer service','اتصال','111','19777'],t:'أرقام خدمة العملاء',p:null,d:null,s:['خدمة العملاء: 111 أو 19777 (من الأرقام المعلنة على te.eg).']}
+];
+function pkgAnswer(q){
+ const m=q.match(/(\d{2,4})/); const wantsPrice=/(سعر|بكام|باقه|باقات|price|plan|جيجا|gb)/.test(q);
+ if(!wantsPrice) return null;
+ if(m){const g=m[1]; let o=[]; if(SUPER[g]) o.push('• Super 30 ميجا: '+g+' جيجا = '+SUPER[g]+' ج.م'); if(MEGA[g]) o.push('• Mega 70 ميجا: '+g+' جيجا = '+MEGA[g]+' ج.م'); if(o.length) return '📦 <strong>أسعار شاملة الضريبة (من te.eg):</strong><br>'+o.join('<br>')+'<br><br>راجع te.eg للتأكد من السعر الحالي.';}
+ let r='📡 <strong>باقات الإنترنت الأرضي (شاملة الضريبة، من te.eg):</strong><br>🔹 <strong>Super 30 ميجا</strong><br>'+Object.keys(SUPER).map(g=>'• '+g+' جيجا: '+SUPER[g]+' ج.م').join('<br>')+'<br>🔹 <strong>Mega 70 ميجا</strong><br>'+Object.keys(MEGA).map(g=>'• '+g+' جيجا: '+MEGA[g]+' ج.م').join('<br>')+'<br><br>راجع te.eg للتأكد من السعر الحالي.';
+ return r;
+}
+function answer(raw){
+ const q=N(raw); const p=pkgAnswer(q); if(p) return p;
+ let best=null,bs=0;
+ for(const t of TOPICS){let s=0; for(const k of t.k){ if(q.includes(N(k))) s+=N(k).length>3?2:1;} if(s>bs){bs=s;best=t;}}
+ if(!best) return 'مش لاقي سؤال مطابق في النسخة التجريبية. 🤷<br>جرّب: النت بطيء، مفيش نت، واي فاي، فاتورة، سعر باقة 250 جيجا.';
+ let r='✅ <strong>'+best.t+'</strong><br>';
+ if(best.p) r+='🧭 المسار (مثالي): <strong>'+best.p+'</strong><br>🏢 الجهة: '+best.d+'<br><br>';
+ r+=best.s.map((x,i)=>(best.s.length>1&&best.p?(i+1)+'. ':'')+x).join('<br>');
+ if(best.p) r+='<br><br>'+D;
+ return r;
+}
+function addMessage(html,isUser){
+ const box=document.getElementById('chatMessages'); const d=document.createElement('div');
+ d.className='message '+(isUser?'user-msg':'bot-msg');
+ if(isUser) d.textContent=html; else d.innerHTML=html;
+ box.appendChild(d); box.scrollTop=box.scrollHeight;
+}
+function quickDirect(q){addMessage(q,true); setTimeout(()=>addMessage(answer(q),false),250);}
+function send(){const i=document.getElementById('userInput'); const v=i.value.trim(); if(!v) return; i.value=''; quickDirect(v);}
+document.getElementById('sendBtn').addEventListener('click',send);
+document.getElementById('userInput').addEventListener('keydown',e=>{if(e.key==='Enter')send();});
+const CH=[['📡 النت بطيء','النت بطيء'],['📴 مفيش نت','مفيش نت خالص'],['📶 واي فاي','نسي باسورد الواي فاي'],['🧾 فاتورة','الفاتورة جت غلط'],['💸 استرداد','عايز فلوسه ترجع'],['❌ إلغاء','عميل عايز يلغي'],['📦 نقل الخط','عايز ينقل الخط لعنوان جديد'],['👷 زيارة فني','الفني مجاش'],['🔺 تصعيد','عميل عايز يكلم مشرف'],['📦 أسعار الباقات','أسعار الباقات'],['📞 خدمة العملاء','رقم خدمة العملاء']];
+const qb=document.getElementById('quickBar');
+CH.forEach(c=>{const b=document.createElement('button'); b.className='q-chip'; b.textContent=c[0]; b.addEventListener('click',()=>quickDirect(c[1])); qb.appendChild(b);});
+function toggleQuickBar(){const o=qb.style.display==='none'; qb.style.display=o?'flex':'none'; document.getElementById('qArrow').textContent=o?'▼':'▲';}
+let fs=100; function changeFontSize(d){fs=Math.max(70,Math.min(150,fs+d*10)); document.getElementById('chatMessages').style.fontSize=fs+'%'; document.getElementById('fontSizeLabel').textContent=fs+'%';}
+document.getElementById('closePopup').addEventListener('click',()=>{document.getElementById('welcomePopup').style.display='none';});
+document.getElementById('themeBtn').addEventListener('click',()=>{const l=document.body.classList.toggle('light-mode'); document.getElementById('themeBtn').textContent=l?'☀️ فاتح':'🌙 ليلي';});
+
+const helperDiv = document.createElement('div');
+helperDiv.className = 'cartoon-helper';
+helperDiv.innerHTML = `
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <rect x="65" y="95" width="70" height="60" rx="15" fill="#5C2D91" />
+        <ellipse cx="100" cy="75" rx="38" ry="35" fill="#B380CE" />
+        <path d="M100 40 Q110 30 120 40" stroke="white" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M90 50 Q100 38 110 50" stroke="white" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M80 60 Q100 45 120 60" stroke="white" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="100" cy="55" r="6" fill="#5C2D91" />
+        <circle cx="85" cy="70" r="5" fill="black" />
+        <circle cx="115" cy="70" r="5" fill="black" />
+        <circle cx="86" cy="69" r="2" fill="white" />
+        <circle cx="116" cy="69" r="2" fill="white" />
+        <path d="M78 63 Q83 60 88 63" stroke="#5C2D91" stroke-width="2" fill="none" />
+        <path d="M112 63 Q117 60 122 63" stroke="#5C2D91" stroke-width="2" fill="none" />
+        <path d="M92 82 Q100 90 108 82" stroke="black" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M98 86 Q100 90 102 86" fill="#FF8A8A" />
+        <rect x="58" y="68" width="14" height="20" rx="5" fill="#3A1F6E" />
+        <rect x="128" y="68" width="14" height="20" rx="5" fill="#3A1F6E" />
+        <path d="M70 80 L64 95" stroke="#222" stroke-width="3" fill="none" />
+        <circle cx="64" cy="97" r="4" fill="#222" />
+        <path d="M85 110 L90 105 L95 115 L100 102 L105 115 L110 105 L115 110" stroke="white" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M125 115 Q140 120 145 135" stroke="#5C2D91" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <circle cx="145" cy="138" r="5" fill="#5C2D91" />
+        <path d="M70 110 Q50 100 45 85" stroke="#5C2D91" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <rect x="30" y="60" width="22" height="35" rx="4" fill="#3A1F6E" />
+        <rect x="33" y="65" width="16" height="24" rx="2" fill="white" />
+        <circle cx="41" cy="71" r="4" fill="#8B5CF6" />
+        <text x="41" y="84" font-size="6" fill="#5C2D91" text-anchor="middle" font-family="sans-serif">we</text>
+        <ellipse cx="80" cy="158" rx="15" ry="8" fill="#5C2D91" />
+        <ellipse cx="120" cy="158" rx="15" ry="8" fill="#5C2D91" />
+        <text x="100" y="185" font-size="24" font-family="'Tajawal', sans-serif" font-weight="bold" fill="white" text-anchor="middle" stroke="#5C2D91" stroke-width="1">we</text>
+    </svg>
+    <div class="helper-tooltip">اضغط للحصول على مساعدة سريعة</div>
+    <div class="helper-popup" id="helperPopup">
+        <p><strong>✨ مرحباً بك في WE Guide ✨</strong><br>🔍 يمكنك سؤالي عن أي شيء يخص WE:<br>
+        • أسعار باقات الإنترنت الأرضي<br>• خطوات مثالية لمشاكل شائعة<br>
+        📢 فقط اكتب ما تريد وسأجيبك فوراً!</p>
+        <button id="closeHelperPopup">حسناً 🚀</button>
+    </div>
+`;
+document.body.appendChild(helperDiv);
+
+const cartoon = document.querySelector('.cartoon-helper');
+const helperPopup = document.getElementById('helperPopup');
+const closeHelperBtn = document.getElementById('closeHelperPopup');
+if (cartoon && helperPopup && closeHelperBtn) {
+    cartoon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        helperPopup.style.display = helperPopup.style.display === 'flex' ? 'none' : 'flex';
+    });
+    closeHelperBtn.addEventListener('click', () => {
+        helperPopup.style.display = 'none';
+    });
+    document.addEventListener('click', (e) => {
+        if (!cartoon.contains(e.target) && !helperPopup.contains(e.target)) {
+            helperPopup.style.display = 'none';
+        }
+    });
+}
+
+</script>
+</body>
+</html>
